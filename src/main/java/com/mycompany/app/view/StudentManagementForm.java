@@ -56,21 +56,21 @@ public class StudentManagementForm extends javax.swing.JFrame {
      * @param studentResult
      * @return
      */
-    private Vector studentResultToVector(StudentResult studentResult) {
-        var v = new Vector();
+//    private Vector studentResultToVector(StudentResult studentResult) {
+//        var v = new Vector();
 //        v.add(studentResult.getStudent().getMaSV());
 //        v.add(studentResult.getStudent().getTenSV());
 //        v.add(studentResult.getStudent().getGioitinh());
 //        v.add(studentResult.getStudent().getLop());
 //        v.add(studentResult.getStudent().getTenSV());
 //        v.add(studentResult.getStudent().getNgaysinh());
-        return v;
-    }
+//        return v;
+//    }
 
     private final StudentManagerController studentManagerController = StudentManagerController.getInstance();
 
     public void initializeData() {
-        data = studentResultToVector(studentManagerController.getAllResult().get(0));
+//        data = studentResultToVector(studentManagerController.getAllResult().get(0));
     }
 
     /**
@@ -183,6 +183,11 @@ public class StudentManagementForm extends javax.swing.JFrame {
         });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("jButton2");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -316,6 +321,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
         StudentManagerController controler=StudentManagerController.getInstance();
          ArrayList<StudentResult> list=controler.getAllResult();
        Vector cols=new Vector();
+       
        cols.add("Mã SV");
        cols.add("Họ tên");
        cols.add("Lớp");
@@ -342,6 +348,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
          
     }//GEN-LAST:event_jButton2ActionPerformed
 
+<<<<<<< HEAD
     private void tableSVMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSVMouseReleased
         // TODO add your handling code here:
          int r = tableSV.rowAtPoint(evt.getPoint());
@@ -361,6 +368,11 @@ public class StudentManagementForm extends javax.swing.JFrame {
         }
     
     }//GEN-LAST:event_tableSVMouseReleased
+=======
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+>>>>>>> c9ee6936e8ca193ba0b80fc2667e2fb4ab9e2eec
 
     /**
      * @param args the command line arguments

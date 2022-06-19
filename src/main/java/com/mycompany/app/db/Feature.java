@@ -1,6 +1,7 @@
 package com.mycompany.app.db;
 
 import com.mycompany.app.model.*;
+import com.mycompany.app.util.ListUtil;
 
 import java.sql.Connection;
 import java.util.Date;
@@ -8,34 +9,42 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Feature implements iFeature {
 
-    Student student = new Student("CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
+    Student thieu = new Student("CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
+    Student thang = new Student("CT0402001", "AT", "Thang", 0, "Ha Noi", "CT4B", new Date());
+    Student tho = new Student("CT0402002", "CT", "Tho", 0, "Ha Noi", "CT4B", new Date());
+    ArrayList<Student> students = ListUtil.arrayListOf(thieu, thang, tho);
 
-    Subject csdl = new Subject("CSDL", "Cơ sở dữ liệu", 3);
-    Subject tin = new Subject("THDC", "Tin học đại cương", 3);
-    Subject toancc = new Subject("TA1", "Toán cao cấp A1", 4);
-    public ArrayList<Subject> subjects = new ArrayList<>();
+    Department at = new Department("AT", "An toàn thông tin");
+    Department ct = new Department("CT", "Công nghệ thông tin");
+    Department dt = new Department("DT", "Điện tử viễn thông");
+    ArrayList<Department> departments = ListUtil.arrayListOf(at, ct, dt);
 
-    Result csdlResult = new Result(student.getCode(), csdl.getCode(), 1, 2, 3);
-    Result tinResult = new Result(student.getCode(), tin.getCode(), 5, 2, 0);
-    Result toanccResult = new Result(student.getCode(), toancc.getCode(), 7, 5, 2);
+    Subject csdl = new Subject("ATCT_CSDL", "Cơ sở dữ liệu", 3, ListUtil.arrayListOf(at, ct));
+    Subject tin = new Subject("THDC", "Tin học đại cương", 3, ListUtil.arrayListOf(at, ct, dt));
+    Subject toancc = new Subject("TA1", "Toán cao cấp A1", 4, ListUtil.arrayListOf(at, ct, dt));
+    Subject atpm = new Subject("CT_ATPM", "An toàn phần mềm", 4, ListUtil.arrayListOf(ct));
+    public ArrayList<Subject> subjects = ListUtil.arrayListOf(csdl, tin, toancc, atpm);
 
-   public ArrayList<Result> resultList = new ArrayList<>();
+    Result thieuCsdlResult = new Result(thieu.getCode(), csdl.getCode(), 1, 2, 3);
+    Result thieuTinResult = new Result(thieu.getCode(), tin.getCode(), 5, 2, 0);
+    Result thieuToanccResult = new Result(thieu.getCode(), toancc.getCode(), 7, 5, 2);
+    ArrayList<Result> thieuResult = ListUtil.arrayListOf(thieuCsdlResult, thieuToanccResult, thieuTinResult);
 
+    Result thoCsdlResult = new Result(tho.getCode(), csdl.getCode(), 1, 2, 3);
+    Result thoTinResult = new Result(tho.getCode(), tin.getCode(), 5, 2, 0);
+    ArrayList<Result> thoResult = ListUtil.arrayListOf(thoCsdlResult, thoTinResult);
 
-    public Feature() {
-        subjects.add(csdl);
-        subjects.add(tin);
-        subjects.add(toancc);
-        resultList.add(csdlResult);
-        resultList.add(tinResult);
-        resultList.add(toanccResult);
-    }
+    Result thangCsdlResult = new Result(thang.getCode(), csdl.getCode(), 1, 2, 3);
+    Result thangAtpmResult = new Result(thang.getCode(), atpm.getCode(), 5, 2, 0);
+    Result thangToanccResult = new Result(thang.getCode(), toancc.getCode(), 7, 5, 2);
+    ArrayList<Result> thangResult = ListUtil.arrayListOf(thangToanccResult, thangAtpmResult, thangCsdlResult);
+
 
     @Override
     public Vector findPointByID(int maSV) {
@@ -110,11 +119,13 @@ public class Feature implements iFeature {
 //            }
 //        }
     }
-    
+
     public ArrayList<StudentResult> getAllResult() {
-       ArrayList<StudentResult> listStudentResult = new ArrayList<>();
-       listStudentResult.add(new StudentResult(student, resultList));
-        return listStudentResult;
+        return ListUtil.arrayListOf(
+                new StudentResult(thieu, thieuResult),
+                new StudentResult(tho, thoResult),
+                new StudentResult(thang, thangResult)
+        );
     }
 
     @Override
@@ -138,12 +149,17 @@ public class Feature implements iFeature {
 
     @Override
     public Department getDepartment(String code) {
-        return null;
+        return departments.stream().filter(department -> department.getCode().equals(code)).collect(Collectors.toList()).get(0);
     }
 
     @Override
     public Subject getSubject(String code) {
-        return subjects.stream().filter(subject -> subject.getCode().equals(code)).collect(Collectors.toList()).get(0) ;
+        return subjects.stream().filter(subject -> subject.getCode().equals(code)).collect(Collectors.toList()).get(0);
+    }
+
+    @Override
+    public List<Subject> getSubjects() {
+        return subjects;
     }
 
 
@@ -151,7 +167,7 @@ public class Feature implements iFeature {
         Subject a = new Feature().getSubject("CSDL");
         System.out.println(a.getCode());
     }
-    
+
     public ResultSet query(String query) throws Exception {
         Connection con = getDBconnection.getConnection();
         PreparedStatement statement = con.prepareStatement(query);

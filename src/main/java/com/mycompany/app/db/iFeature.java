@@ -4,6 +4,7 @@ import com.mycompany.app.model.Department;
 import com.mycompany.app.model.Student;
 import com.mycompany.app.model.Subject;
 
+import java.util.List;
 import java.util.Vector;
 
 public interface iFeature {
@@ -26,6 +27,8 @@ public interface iFeature {
 
 
     Subject getSubject(String code);
+
+    List<Subject> getSubjects();
     
    
 }

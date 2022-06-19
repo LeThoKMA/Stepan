@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Stepan.iml" filepath="$PROJECT_DIR$/Stepan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../KMAapp.iml" filepath="$PROJECT_DIR$/../KMAapp.iml" />
     </modules>
   </component>
 </project>
