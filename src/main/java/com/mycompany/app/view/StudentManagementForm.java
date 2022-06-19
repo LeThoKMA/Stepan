@@ -20,6 +20,8 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import com.mycompany.app.view.addsvForm;
 import java.util.ArrayList;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 
 public class StudentManagementForm extends javax.swing.JFrame {
 
@@ -148,6 +150,11 @@ public class StudentManagementForm extends javax.swing.JFrame {
                 "Mã sinh viên", "Họ tên", "GT", "Ngày sinh", "Quê", "Lớp"
             }
         ));
+        tableSV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableSVMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableSV);
 
         txtSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -206,7 +213,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -326,6 +333,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
            row.add(result.getResultList().get(i).getPoint1());
             row.add(result.getResultList().get(i).getPoint2());
              row.add(result.getResultList().get(i).getPoint3());
+            
              i++;
              rows.add(row);
        }
@@ -333,6 +341,26 @@ public class StudentManagementForm extends javax.swing.JFrame {
          
          
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tableSVMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSVMouseReleased
+        // TODO add your handling code here:
+         int r = tableSV.rowAtPoint(evt.getPoint());
+        if (r >= 0 && r < tableSV.getRowCount()) {
+            tableSV.setRowSelectionInterval(r, r);
+        } else {
+            tableSV.clearSelection();
+        }
+
+        int rowindex = tableSV.getSelectedRow();
+        if (rowindex < 0)
+            return;
+        if (evt.isPopupTrigger() && evt.getComponent() instanceof JTable ) {
+            JPopupMenu popup=new JPopupMenu() ;
+            popup.show(evt.getComponent(), evt.getX(), evt.getY());
+           
+        }
+    
+    }//GEN-LAST:event_tableSVMouseReleased
 
     /**
      * @param args the command line arguments
