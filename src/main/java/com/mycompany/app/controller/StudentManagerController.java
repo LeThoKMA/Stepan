@@ -1,6 +1,8 @@
 package com.mycompany.app.controller;
 
+import com.mycompany.app.db.FakeDatabase;
 import com.mycompany.app.db.Feature;
+import com.mycompany.app.db.iFeature;
 import com.mycompany.app.model.Department;
 import com.mycompany.app.model.StudentResult;
 import com.mycompany.app.model.Subject;
@@ -24,7 +26,7 @@ public class StudentManagerController {
         return instance;
     }
     private ArrayList<StudentResult> studentResult;
-    Feature dao = new Feature();
+    iFeature dao = new FakeDatabase();
     public ArrayList<StudentResult> getAllResult() {
         studentResult = dao.getAllResult();
         return studentResult;

@@ -4,17 +4,16 @@ import com.mycompany.app.model.*;
 import com.mycompany.app.util.ListUtil;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
-public class Feature implements iFeature {
-
+public class FakeDatabase implements iFeature{
     Student thieu = new Student("CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
     Student thang = new Student("CT0402001", "AT", "Thang", 0, "Ha Noi", "CT4B", new Date());
     Student tho = new Student("CT0402002", "CT", "Tho", 0, "Ha Noi", "CT4B", new Date());
@@ -94,33 +93,9 @@ public class Feature implements iFeature {
 
     @Override
     public void updateStudent(Student stu) {
-//        Connection con = null;
-//        Statement statement = null;
-//        try {
-//            con = getDBconnection.getConnection();
-//            con.setAutoCommit(false);
-//            statement = con.createStatement();
-//            statement.executeUpdate("update Sinhvien values(" + stu.getMaSV() + stu.getTenSV() + stu.getGioitinh() + stu.getQue() + stu.getLop() + ")");
-//            con.commit();
-//        } catch (Exception e) {
-//            if (con != null)
-//			try {
-//                con.rollback();
-//            } catch (SQLException ex) {
-//                e.printStackTrace();
-//            }
-//        } finally {
-//            if (statement != null) {
-//                try {
-//                    statement.close();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Feature.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
+
     }
 
-    @Override
     public ArrayList<StudentResult> getAllResult() {
         return ListUtil.arrayListOf(
                 new StudentResult(thieu, thieuResult),
