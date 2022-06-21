@@ -2,6 +2,7 @@ package com.mycompany.app.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ListUtil {
     /**
@@ -13,6 +14,15 @@ public class ListUtil {
     public static <T> ArrayList<T> arrayListOf(T... params) {
         ArrayList<T> result = new ArrayList<>();
         Collections.addAll(result, params);
+        return result;
+    }
+
+
+    public static <T> ArrayList<T> arrayListOf(List<T>... params) {
+        ArrayList<T> result = new ArrayList<>();
+        for (List<T> param: params) {
+            result.addAll(param);
+        }
         return result;
     }
 }
