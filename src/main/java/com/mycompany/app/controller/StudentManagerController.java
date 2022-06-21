@@ -4,10 +4,6 @@ import com.mycompany.app.db.Feature;
 import com.mycompany.app.model.Department;
 import com.mycompany.app.model.StudentResult;
 import com.mycompany.app.model.Subject;
-<<<<<<< HEAD
-=======
-
->>>>>>> c9ee6936e8ca193ba0b80fc2667e2fb4ab9e2eec
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,14 +38,11 @@ public class StudentManagerController {
             return nameO1[nameO1.length - 1].compareTo(nameO2[nameO2.length - 1]);
         });
         return studentResult;
-    }
-<<<<<<< HEAD
-    
+    }    
     public Subject getSubject(String code) {
         return dao.getSubject(code);
     }
     
-=======
 
     /**
      * Get all department need this subject
@@ -69,6 +62,5 @@ public class StudentManagerController {
     public List<Subject> subjectInDepartment(Department department) {
         return dao.getSubjects().stream().filter(subject -> subject.getDepartmentList().contains(department.getCode())).collect(Collectors.toList());
     }
->>>>>>> c9ee6936e8ca193ba0b80fc2667e2fb4ab9e2eec
     
 }
