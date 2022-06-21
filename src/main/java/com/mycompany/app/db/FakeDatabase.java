@@ -12,10 +12,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FakeDatabase implements iFeature {
     Student thieu = new Student("CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
-    Student thang = new Student("CT0402001", "AT", "Thang", 0, "Ha Noi", "CT4B", new Date());
+    Student thang = new Student("CT0402001", "CT", "Thang", 0, "Ha Noi", "CT4B", new Date());
     Student tho = new Student("CT0402002", "CT", "Tho", 0, "Ha Noi", "CT4B", new Date());
     ArrayList<Student> students = ListUtil.arrayListOf(thieu, thang, tho);
 
@@ -24,7 +25,7 @@ public class FakeDatabase implements iFeature {
     Department dt = new Department("DT", "Điện tử viễn thông");
     ArrayList<Department> departments = ListUtil.arrayListOf(at, ct, dt);
 
-    Subject csdl = new Subject("ATCT_CSDL", "Cơ sở dữ liệu", 3, ListUtil.arrayListOf(at, ct));
+    Subject csdl = new Subject("CSDL", "Cơ sở dữ liệu", 3, ListUtil.arrayListOf(at, ct));
     Subject tin = new Subject("THDC", "Tin học đại cương", 3, ListUtil.arrayListOf(at, ct, dt));
     Subject toancc = new Subject("TA1", "Toán cao cấp A1", 4, ListUtil.arrayListOf(at, ct, dt));
     Subject atpm = new Subject("CT_ATPM", "An toàn phần mềm", 4, ListUtil.arrayListOf(ct));
@@ -35,16 +36,17 @@ public class FakeDatabase implements iFeature {
     Result thieuToanccResult = new Result(thieu.getCode(), toancc.getCode(), 7, 5, 2);
     ArrayList<Result> thieuResult = ListUtil.arrayListOf(thieuCsdlResult, thieuToanccResult, thieuTinResult);
 
-    Result thoCsdlResult = new Result(tho.getCode(), csdl.getCode(), 1, 2, 3);
+    Result thoCsdlResult = new Result(tho.getCode(), csdl.getCode(), 1, 2, 3.5f);
     Result thoTinResult = new Result(tho.getCode(), tin.getCode(), 5, 2, 0);
     ArrayList<Result> thoResult = ListUtil.arrayListOf(thoCsdlResult, thoTinResult);
 
-    Result thangCsdlResult = new Result(thang.getCode(), csdl.getCode(), 1, 2, 3);
+    Result thangCsdlResult = new Result(thang.getCode(), csdl.getCode(), 1, 2, 4.9f);
     Result thangAtpmResult = new Result(thang.getCode(), atpm.getCode(), 5, 2, 0);
     Result thangToanccResult = new Result(thang.getCode(), toancc.getCode(), 7, 5, 2);
     ArrayList<Result> thangResult = ListUtil.arrayListOf(thangToanccResult, thangAtpmResult, thangCsdlResult);
 
     ArrayList<Result> results = ListUtil.arrayListOf(thieuResult, thoResult, thangResult);
+
     @Override
     public Vector findPointByID(int maSV) {
         Connection con = null;
@@ -96,13 +98,30 @@ public class FakeDatabase implements iFeature {
 
     }
 
-    public ArrayList<StudentResult> getAllResult() {
+    public ArrayList<StudentResults> getAllResult() {
         return ListUtil.arrayListOf(
-                new StudentResult(thieu, thieuResult),
-                new StudentResult(tho, thoResult),
-                new StudentResult(thang, thangResult)
+                new StudentResults(thieu, thieuResult),
+                new StudentResults(tho, thoResult),
+                new StudentResults(thang, thangResult)
         );
     }
+
+    @Override
+    public List<StudentResult> getStudentResultBySubjectAndDepartment(String departmentCode, String subjectCode) {
+        List<Student> studentList = getStudentInDepartment(departmentCode);
+        ArrayList<StudentResult> studentResultList = new ArrayList<>();
+        for (Student student: studentList) {
+
+            Result result = getResult(student.getCode(), subjectCode);
+            if (result != null) studentResultList.add(new StudentResult(student, getResult(student.getCode(), subjectCode)));
+        }
+        return studentResultList;
+    }
+
+//    @Override
+//    public List<StudentResults> getStudentResultInDepartment() {
+//        return null;
+//    }
 
     @Override
     public boolean insertStudent(Student s) {
@@ -120,12 +139,27 @@ public class FakeDatabase implements iFeature {
     }
 
     @Override
+    public List<Student> getAllStudent() {
+        return students;
+    }
+
+    @Override
+    public List<Student> getStudentInDepartment(String departmentCode) {
+        return getAllStudent().stream().filter(student -> student.getDepartmentCode().equals(departmentCode)).collect(Collectors.toList());
+    }
+
+    @Override
     public Department getDepartment(String code) {
         try {
             return departments.stream().filter(department -> department.getCode().equals(code)).collect(Collectors.toList()).get(0);
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Department> getDepartments() {
+        return departments;
     }
 
     @Override
@@ -168,26 +202,35 @@ public class FakeDatabase implements iFeature {
 
     @Override
     public void insertResult(Result result) {
+        results.add(result);
     }
 
     @Override
-    public void getResult(String studentCode, String subjectCode) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Result getResult(String studentCode, String subjectCode) {
+        try {
+            Stream<Result> resultStream = results.stream().filter(result -> result.getStudentCode().equals(studentCode) && result.getSubejctCode().equals(subjectCode));
+            return resultStream.collect(Collectors.toList()).get(0);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     @Override
-    public void getAllResultOfStudent(String student) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Result> getAllResultOfStudent(String studentCode) {
+        Stream<Result> resultStream = results.stream().filter(result -> result.getStudentCode().equals(studentCode));
+        return resultStream.collect(Collectors.toList());
     }
 
     @Override
     public boolean insertSubject(Subject subject) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        subjects.add(subject);
+        return true;
     }
 
     @Override
     public void deleteSubject(Subject subject) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        subjects.remove(subject);
     }
 
     @Override
