@@ -42,6 +42,6 @@ public interface iFeature {
     Subject getSubject(String code);
 
     List<Subject> getSubjects();
-    
+    List<Department> departments();
    
 }

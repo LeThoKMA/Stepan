@@ -59,5 +59,9 @@ public class StudentManagerController {
     public List<Subject> subjectInDepartment(Department department) {
         return dao.getSubjects().stream().filter(subject -> subject.getDepartmentList().contains(department.getCode())).collect(Collectors.toList());
     }
+    public List<Department> getAllList()
+    {
+        return dao.departments();
+    }
     
 }
