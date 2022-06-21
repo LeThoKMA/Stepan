@@ -154,6 +154,11 @@ public class Feature implements iFeature {
     }
 
     @Override
+    public List<Department> getAllDepartment() {
+        return null;
+    }
+
+    @Override
     public Subject getSubject(String code) {
         return subjects.stream().filter(subject -> subject.getCode().equals(code)).collect(Collectors.toList()).get(0);
     }
@@ -192,12 +197,12 @@ public class Feature implements iFeature {
     }
 
     @Override
-    public void getResult(String studentCode, String subjectCode) {
+    public Result getResult(String studentCode, String subjectCode) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void getAllResultOfStudent(String student) {
+    public List<Result> getAllResultOfStudent(String studentCode) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FakeDatabase implements iFeature {
     Student thieu = new Student("CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
@@ -129,6 +130,11 @@ public class FakeDatabase implements iFeature {
     }
 
     @Override
+    public List<Department> getAllDepartment() {
+        return departments;
+    }
+
+    @Override
     public Subject getSubject(String code) {
         try {
             return subjects.stream().filter(subject -> subject.getCode().equals(code)).collect(Collectors.toList()).get(0);
@@ -168,26 +174,30 @@ public class FakeDatabase implements iFeature {
 
     @Override
     public void insertResult(Result result) {
+        results.add(result);
     }
 
     @Override
-    public void getResult(String studentCode, String subjectCode) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Result getResult(String studentCode, String subjectCode) {
+        Stream<Result> resultStream = results.stream().filter(result -> result.getStudentCode().equals(studentCode) && result.getSubejctCode().equals(subjectCode));
+        return resultStream.collect(Collectors.toList()).get(0);
     }
 
     @Override
-    public void getAllResultOfStudent(String student) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Result> getAllResultOfStudent(String studentCode) {
+        Stream<Result> resultStream = results.stream().filter(result -> result.getStudentCode().equals(studentCode));
+        return resultStream.collect(Collectors.toList());
     }
 
     @Override
     public boolean insertSubject(Subject subject) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        subjects.add(subject);
+        return true;
     }
 
     @Override
     public void deleteSubject(Subject subject) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        subjects.remove(subject);
     }
 
 }

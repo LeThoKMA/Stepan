@@ -22,13 +22,13 @@ public interface iFeature {
 
     Department getDepartment(String code);
 
-
+    List<Department> getAllDepartment();
 
     void insertResult(Result result);
 
-    void getResult(String studentCode, String subjectCode);
+    Result getResult(String studentCode, String subjectCode);
 
-    void getAllResultOfStudent(String student);
+    List<Result> getAllResultOfStudent(String studentCode);
 
     ArrayList<StudentResult> getAllResult();
 
