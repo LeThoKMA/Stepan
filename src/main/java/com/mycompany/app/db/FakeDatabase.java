@@ -4,17 +4,16 @@ import com.mycompany.app.model.*;
 import com.mycompany.app.util.ListUtil;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
-public class Feature implements iFeature {
-
+public class FakeDatabase implements iFeature {
     Student thieu = new Student("CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
     Student thang = new Student("CT0402001", "AT", "Thang", 0, "Ha Noi", "CT4B", new Date());
     Student tho = new Student("CT0402002", "CT", "Tho", 0, "Ha Noi", "CT4B", new Date());
@@ -45,7 +44,7 @@ public class Feature implements iFeature {
     Result thangToanccResult = new Result(thang.getCode(), toancc.getCode(), 7, 5, 2);
     ArrayList<Result> thangResult = ListUtil.arrayListOf(thangToanccResult, thangAtpmResult, thangCsdlResult);
 
-
+    ArrayList<Result> results = ListUtil.arrayListOf(thieuResult, thoResult, thangResult);
     @Override
     public Vector findPointByID(int maSV) {
         Connection con = null;
@@ -94,33 +93,9 @@ public class Feature implements iFeature {
 
     @Override
     public void updateStudent(Student stu) {
-//        Connection con = null;
-//        Statement statement = null;
-//        try {
-//            con = getDBconnection.getConnection();
-//            con.setAutoCommit(false);
-//            statement = con.createStatement();
-//            statement.executeUpdate("update Sinhvien values(" + stu.getMaSV() + stu.getTenSV() + stu.getGioitinh() + stu.getQue() + stu.getLop() + ")");
-//            con.commit();
-//        } catch (Exception e) {
-//            if (con != null)
-//			try {
-//                con.rollback();
-//            } catch (SQLException ex) {
-//                e.printStackTrace();
-//            }
-//        } finally {
-//            if (statement != null) {
-//                try {
-//                    statement.close();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Feature.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
+
     }
 
-    @Override
     public ArrayList<StudentResult> getAllResult() {
         return ListUtil.arrayListOf(
                 new StudentResult(thieu, thieuResult),
@@ -131,31 +106,35 @@ public class Feature implements iFeature {
 
     @Override
     public boolean insertStudent(Student s) {
-//        try {
-//            query("SET IDENTITY_INSERT Sinhvien ON");
-//
-//
-//ResultSet rs = query("insert into Sinhvien values('CT01', 'THieu', 'Nam', 'Thai Nguyen', 'CT4B', '10/10/2002')" );
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
+        students.add(s);
         return true;
     }
 
     @Override
     public Student getStudent(String code) {
-        return null;
+        try {
+            return students.stream().filter(student -> student.getCode().equals(code)).collect(Collectors.toList()).get(0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public Department getDepartment(String code) {
-        return departments.stream().filter(department -> department.getCode().equals(code)).collect(Collectors.toList()).get(0);
+        try {
+            return departments.stream().filter(department -> department.getCode().equals(code)).collect(Collectors.toList()).get(0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public Subject getSubject(String code) {
-        return subjects.stream().filter(subject -> subject.getCode().equals(code)).collect(Collectors.toList()).get(0);
+        try {
+            return subjects.stream().filter(subject -> subject.getCode().equals(code)).collect(Collectors.toList()).get(0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -178,17 +157,17 @@ public class Feature implements iFeature {
 
     @Override
     public boolean insertDepartment(Department department) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        departments.add(department);
+        return true;
     }
 
     @Override
     public void deleteDepartment(Department department) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        departments.remove(department);
     }
 
     @Override
     public void insertResult(Result result) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

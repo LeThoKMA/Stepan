@@ -21,8 +21,8 @@ public class LoginController {
         return instance;
     }
 
-    public LoginRespone login(String username, String pass) {
-        return LoginRespone.SUSSCESS;
+    public LoginResponse login(String username, String pass) {
+        return LoginResponse.SUCCESS;
     }
 
     public void get() {
@@ -33,8 +33,8 @@ public class LoginController {
         Feature feature = new Feature();
     }
 
-    public enum LoginRespone {
-        SUSSCESS,
+    public enum LoginResponse {
+        SUCCESS,
         NO_USER_FOUND_ERROR,
         DONT_KNOW_WHY_ERROR
     }

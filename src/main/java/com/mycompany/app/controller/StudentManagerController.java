@@ -1,6 +1,8 @@
 package com.mycompany.app.controller;
 
+import com.mycompany.app.db.FakeDatabase;
 import com.mycompany.app.db.Feature;
+import com.mycompany.app.db.iFeature;
 import com.mycompany.app.model.Department;
 import com.mycompany.app.model.StudentResult;
 import com.mycompany.app.model.Subject;
@@ -15,7 +17,6 @@ import java.util.stream.Collectors;
  */
 public class StudentManagerController {
     private StudentManagerController(){};
-    Feature dao = new Feature();
     private static StudentManagerController instance;
     public static StudentManagerController getInstance() {
         if (instance == null) {
@@ -24,7 +25,7 @@ public class StudentManagerController {
         return instance;
     }
     private ArrayList<StudentResult> studentResult;
-    
+    iFeature dao = new FakeDatabase();
     public ArrayList<StudentResult> getAllResult() {
         studentResult = dao.getAllResult();
         return studentResult;
@@ -38,11 +39,7 @@ public class StudentManagerController {
             return nameO1[nameO1.length - 1].compareTo(nameO2[nameO2.length - 1]);
         });
         return studentResult;
-    }    
-    public Subject getSubject(String code) {
-        return dao.getSubject(code);
     }
-    
 
     /**
      * Get all department need this subject

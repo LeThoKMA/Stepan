@@ -6,7 +6,6 @@
 package com.mycompany.app.model;
 
 import java.util.Date;
-import javax.xml.crypto.Data;
 
 /**
  *
@@ -15,7 +14,7 @@ import javax.xml.crypto.Data;
 public class Student {
 
     private String code;
-    private String departmentCodeString;
+    private String departmentCode;
     private String name;
     private int gender;
     private String address;
@@ -23,9 +22,9 @@ public class Student {
     private String klass;
     private Date birthday;
 
-    public Student(String code, String departmentCodeString, String name, int gender, String address, String klass, Date birthday) {
+    public Student(String code, String departmentCode, String name, int gender, String address, String klass, Date birthday) {
         this.code = code;
-        this.departmentCodeString = departmentCodeString;
+        this.departmentCode = departmentCode;
         this.name = name;
         this.gender = gender;
         this.address = address;
@@ -44,12 +43,12 @@ public class Student {
         this.code = code;
     }
 
-    public String getDepartmentCodeString() {
-        return departmentCodeString;
+    public String getDepartmentCode() {
+        return departmentCode;
     }
 
-    public void setDepartmentCodeString(String departmentCodeString) {
-        this.departmentCodeString = departmentCodeString;
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     public String getName() {
