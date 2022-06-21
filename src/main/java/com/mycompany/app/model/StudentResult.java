@@ -1,24 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.app.model;
 
-import java.util.List;
-
-/**
- *
- * @author Phong
- */
 public class StudentResult {
     private Student student;
-     private List<Result> resultList;
+    private Result result;
 
-    public StudentResult(Student student, List<Result> resultList) {
+    public StudentResult(Student student, Result resultCode) {
         this.student = student;
-        this.resultList = resultList;
+        this.result = resultCode;
     }
-   
+
     public Student getStudent() {
         return student;
     }
@@ -27,14 +17,14 @@ public class StudentResult {
         this.student = student;
     }
 
-    public List<Result> getResultList() {
-        return resultList;
+    public Result getResult() {
+        return result;
     }
 
-    public void setResultList(List<Result> resultList) {
-        this.resultList = resultList;
+    public void setResult(Result result) {
+        this.result = result;
     }
 
-    
-    
+    public StudentResult() {
+    }
 }

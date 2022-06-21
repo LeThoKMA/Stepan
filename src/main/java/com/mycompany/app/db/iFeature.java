@@ -16,13 +16,17 @@ public interface iFeature {
 
     Student getStudent(String code);
 
+    List<Student> getAllStudent();
+
+    List<Student> getStudentInDepartment(String departmentCode);
+
     boolean insertDepartment(Department department);
 
     void deleteDepartment(Department department);
 
     Department getDepartment(String code);
 
-    List<Department> getAllDepartment();
+    List<Department> getDepartments();
 
     void insertResult(Result result);
 
@@ -30,7 +34,12 @@ public interface iFeature {
 
     List<Result> getAllResultOfStudent(String studentCode);
 
-    ArrayList<StudentResult> getAllResult();
+    ArrayList<StudentResults> getAllResult();
+
+//    List<StudentResults> getStudentResultsInDepartment();
+
+    List<StudentResult> getStudentResultBySubjectAndDepartment(String departmentCode, String subjectCode);
+
 
 
 
