@@ -121,12 +121,17 @@ public class Feature implements iFeature {
     }
 
     @Override
-    public ArrayList<StudentResult> getAllResult() {
+    public ArrayList<StudentResults> getAllResult() {
         return ListUtil.arrayListOf(
-                new StudentResult(thieu, thieuResult),
-                new StudentResult(tho, thoResult),
-                new StudentResult(thang, thangResult)
+                new StudentResults(thieu, thieuResult),
+                new StudentResults(tho, thoResult),
+                new StudentResults(thang, thangResult)
         );
+    }
+
+    @Override
+    public List<StudentResult> getStudentResultBySubjectAndDepartment(String departmentCode, String subjectCode) {
+        return null;
     }
 
     @Override
@@ -149,12 +154,22 @@ public class Feature implements iFeature {
     }
 
     @Override
+    public List<Student> getAllStudent() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getStudentInDepartment(String departmentCode) {
+        return null;
+    }
+
+    @Override
     public Department getDepartment(String code) {
         return departments.stream().filter(department -> department.getCode().equals(code)).collect(Collectors.toList()).get(0);
     }
 
     @Override
-    public List<Department> getAllDepartment() {
+    public List<Department> getDepartments() {
         return null;
     }
 

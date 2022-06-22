@@ -1,10 +1,10 @@
 package com.mycompany.app.controller;
 
 import com.mycompany.app.db.FakeDatabase;
-import com.mycompany.app.db.Feature;
 import com.mycompany.app.db.iFeature;
 import com.mycompany.app.model.Department;
 import com.mycompany.app.model.StudentResult;
+import com.mycompany.app.model.StudentResults;
 import com.mycompany.app.model.Subject;
 
 import java.util.ArrayList;
@@ -25,21 +25,21 @@ public class StudentManagerController {
         }
         return instance;
     }
-    private ArrayList<StudentResult> studentResult;
+    private ArrayList<StudentResults> studentResults;
     iFeature dao = new FakeDatabase();
-    public ArrayList<StudentResult> getAllResult() {
-        studentResult = dao.getAllResult();
-        return studentResult;
+    public ArrayList<StudentResults> getAllResult() {
+        studentResults = dao.getAllResult();
+        return studentResults;
     }
     
-    public ArrayList<StudentResult> sortByName() {
-        studentResult.sort((o1, o2) -> {
+    public ArrayList<StudentResults> sortByName() {
+        studentResults.sort((o1, o2) -> {
             String[] nameO1 = o1.getStudent().getName().split(" ");
             String[] nameO2 = o2.getStudent().getName().split(" ");       
             //so sanh tu cuoi cung cua ten 
             return nameO1[nameO1.length - 1].compareTo(nameO2[nameO2.length - 1]);
         });
-        return studentResult;
+        return studentResults;
     }
 
     /**
@@ -60,5 +60,11 @@ public class StudentManagerController {
     public List<Subject> subjectInDepartment(Department department) {
         return dao.getSubjects().stream().filter(subject -> subject.getDepartmentList().contains(department.getCode())).collect(Collectors.toList());
     }
+
+    public List<StudentResult> getStudentResultBySubjectAndDepartment(String departmentCode, String subjectCode) {
+        return dao.getStudentResultBySubjectAndDepartment(departmentCode, subjectCode);
+    }
+
+
     
 }

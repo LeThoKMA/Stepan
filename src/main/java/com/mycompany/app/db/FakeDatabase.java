@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FakeDatabase implements iFeature {
-    Student thieu = new Student("CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
+    Student thieu = new Student("CT0402000", "AT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
     Student thang = new Student("CT0402001", "CT", "Thang", 0, "Ha Noi", "CT4B", new Date());
     Student tho = new Student("CT0402002", "CT", "Tho", 0, "Ha Noi", "CT4B", new Date());
     ArrayList<Student> students = ListUtil.arrayListOf(thieu, thang, tho);
