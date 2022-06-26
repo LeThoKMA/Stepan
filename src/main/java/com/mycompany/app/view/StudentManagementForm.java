@@ -15,7 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import com.mycompany.app.db.getDBconnection;
 import com.mycompany.app.model.Department;
+import com.mycompany.app.model.Student;
 import com.mycompany.app.model.StudentResult;
+import com.mycompany.app.model.StudentResults;
 import com.mycompany.app.model.Subject;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -39,17 +41,18 @@ public class StudentManagementForm extends javax.swing.JFrame {
     public StudentManagementForm() {
         initComponents();
         setLocationRelativeTo(null);
-        addColumn();
-        initializeData();
-        DefaultTableModel tablemodel = (DefaultTableModel) tableSV.getModel();
-        tablemodel.addRow(data);
+      //  addColumn();
+       initializeData();
+       
 
     }
 
     private void addColumn() {
+         //  "CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
         column.add("Mã SV");
         column.add("Tên SV");
         column.add("Giới tính");
+        column.add("Quê quán");
         column.add("Lớp");
         column.add("Ngày sinh");
     }
@@ -80,7 +83,38 @@ public class StudentManagementForm extends javax.swing.JFrame {
             
             jComboBoxDepartment.addItem(department.getName());
         }
+        Department department=studentManagerController.getAllList().get(jComboBoxDepartment.getSelectedIndex());
+        Subject subject=studentManagerController.subjectInDepartment(department).get(jComboBoxSubject.getSelectedIndex());
+        System.out.println(department.getCode());
+        List<StudentResult> list = studentManagerController.getStudentResultBySubjectAndDepartment("CT", subject.getCode());
+         
+         //StudentManagerController controler=StudentManagerController.getInstance();
+         //ArrayList<StudentResults> list=controler.getAllResult();
+//       Vector cols=new Vector();
 //       
+//       cols.add("Mã SV");
+//       cols.add("Họ tên");
+//       cols.add("Lớp");
+//       cols.add("Điểm thành phần 1");
+//       cols.add("Điểm thành phần 2");
+//       cols.add("Điểm thi");
+//       Vector rows=new Vector<>();
+//       for(StudentResult result:list)
+//       {
+//           int i=0;
+//           Vector  row=new Vector<>();
+//           row.add(result.getStudent().getCode());
+//           row.add(result.getStudent().getName());
+//           row.add(result.getStudent().getKlass());
+//           row.add(result.getResult().getPoint1());
+//            row.add(result.getResult().getPoint2());
+//             row.add(result.getResult().getPoint3());
+//             i++;
+//             rows.add(row);
+//       }
+//       tableSV.setModel(new DefaultTableModel(rows,cols)); 
+    
+
     }
 
     /**
@@ -104,10 +138,10 @@ public class StudentManagementForm extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jComboBoxDepartment = new javax.swing.JComboBox<>();
         jComboBoxSubject = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuLogout = new javax.swing.JMenuItem();
@@ -157,7 +191,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã sinh viên", "Họ tên", "GT", "Ngày sinh", "Quê", "Lớp"
+
             }
         ));
         tableSV.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -183,8 +217,6 @@ public class StudentManagementForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("STUDENT");
-
         jComboBoxDepartment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxDepartmentActionPerformed(evt);
@@ -197,10 +229,17 @@ public class StudentManagementForm extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Xem kết quả thi");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Xem thông tin sinh viên");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -231,24 +270,24 @@ public class StudentManagementForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(70, 70, 70)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(83, 83, 83)
+                                .addComponent(jButton3)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -274,7 +313,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
                             .addComponent(jComboBoxSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2))
-                    .addComponent(jLabel3))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -335,7 +374,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
 //        }
 //        table.setModel(new DefaultTableModel(rows,cols));
         StudentManagerController controler=StudentManagerController.getInstance();
-         ArrayList<StudentResult> list=controler.getAllResult();
+         ArrayList<StudentResults> list=controler.getAllResult();
        Vector cols=new Vector();
        
        cols.add("Mã SV");
@@ -345,7 +384,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
        cols.add("Điểm thành phần 2");
        cols.add("Điểm thi");
        Vector rows=new Vector<>();
-       for(StudentResult result:list)
+       for(StudentResults result:list)
        {
            int i=0;
            Vector  row=new Vector<>();
@@ -395,6 +434,32 @@ public class StudentManagementForm extends javax.swing.JFrame {
             
     }//GEN-LAST:event_jComboBoxSubjectActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         if(column.isEmpty())
+        addColumn();
+      
+         //DefaultTableModel tablemodel = (DefaultTableModel) tableSV.getModel();
+    Department department=studentManagerController.getAllList().get(jComboBoxDepartment.getSelectedIndex()) ;
+    for(Student student: studentManagerController.getAllStudents(department))
+    {
+      //  "CT0402000", "CT", "Thieu", 0, "Ha Noi", "CT4B", new Date());
+        Vector<Object> vector=new Vector<>();
+        vector.add(student.getCode());
+         // vector.add(student.getDepartmentCode());
+          vector.add(student.getName());
+           vector.add(student.getGender());
+            vector.add(student.getAddress());
+             vector.add(student.getKlass());
+                          vector.add(student.getBirthday());
+               
+             data.add(vector);
+    }
+    
+      tableSV.setModel(new DefaultTableModel(data,column)); 
+     
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -438,10 +503,10 @@ public class StudentManagementForm extends javax.swing.JFrame {
     private javax.swing.JButton bNew;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBoxDepartment;
     private javax.swing.JComboBox<String> jComboBoxSubject;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -66,6 +66,12 @@ public class addsvForm extends javax.swing.JFrame {
 
         jLabel7.setText("Birthday");
 
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
+
         boxGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Gender]", "Nam", "Nữ" }));
         boxGender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,33 +175,37 @@ public class addsvForm extends javax.swing.JFrame {
 
     private void bCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCreateActionPerformed
         // TODO add your handling code here:
-        try
-        {
-            Connection con=getDBconnection.getConnection();
-            Statement sm=con.createStatement();
-            String id=txtID.getText();
-            String name=txtName.getText();
-            String gender=boxGender.getSelectedItem().toString();
-            String email=txtEmail.getText();
-            String phonenum=txtPhoneNum.getText();
-            String classtxt =txtClass.getText();
-            String birthday=txtBirthday.getText();
-            String strStatement="insert into students(id,name,gender,email,phonenum,class,birthday,avatar) "
-            + "select "+"'"+id+"'"+","+"'"+name+"'"+","+"'"+gender+"'"+","+"'"+email+"'"+","+"'"
-            +phonenum+"'"+","+"'"+classtxt+"'"+","+"'"+birthday+"'"+","
-            +"* from openrowset(bulk N'"+imgpath+"',single_blob) as image";
-            sm.executeUpdate(strStatement);
-            JOptionPane.showMessageDialog(this,"Create successfully!");
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(this,e.getMessage());
-        }
+//        try
+//        {
+//            Connection con=getDBconnection.getConnection();
+//            Statement sm=con.createStatement();
+//            String id=txtID.getText();
+//            String name=txtName.getText();
+//            String gender=boxGender.getSelectedItem().toString();
+//            String email=txtEmail.getText();
+//            String phonenum=txtPhoneNum.getText();
+//            String classtxt =txtClass.getText();
+//            String birthday=txtBirthday.getText();
+//            String strStatement="insert into students(id,name,gender,email,phonenum,class,birthday,avatar) "
+//            + "select "+"'"+id+"'"+","+"'"+name+"'"+","+"'"+gender+"'"+","+"'"+email+"'"+","+"'"
+//            +phonenum+"'"+","+"'"+classtxt+"'"+","+"'"+birthday+"'"+","
+//            +"* from openrowset(bulk N'"+imgpath+"',single_blob) as image";
+//            sm.executeUpdate(strStatement);
+//            JOptionPane.showMessageDialog(this,"Create successfully!");
+//        }
+//        catch(Exception e)
+//        {
+//            JOptionPane.showMessageDialog(this,e.getMessage());
+//        }
     }//GEN-LAST:event_bCreateActionPerformed
 
     private void txtPhoneNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPhoneNumActionPerformed
+
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDActionPerformed
 
     /**
      * @param args the command line arguments

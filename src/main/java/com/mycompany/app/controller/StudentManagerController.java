@@ -1,10 +1,12 @@
 package com.mycompany.app.controller;
 
 import com.mycompany.app.db.FakeDatabase;
-import com.mycompany.app.db.Feature;
+//import com.mycompany.app.db.Feature;
 import com.mycompany.app.db.iFeature;
 import com.mycompany.app.model.Department;
+import com.mycompany.app.model.Student;
 import com.mycompany.app.model.StudentResult;
+import com.mycompany.app.model.StudentResults;
 import com.mycompany.app.model.Subject;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,14 +26,14 @@ public class StudentManagerController {
         }
         return instance;
     }
-    private ArrayList<StudentResult> studentResult;
+    private ArrayList<StudentResults> studentResult;
     iFeature dao = new FakeDatabase();
-    public ArrayList<StudentResult> getAllResult() {
+    public ArrayList<StudentResults> getAllResult() {
         studentResult = dao.getAllResult();
         return studentResult;
     }
     
-    public ArrayList<StudentResult> sortByName() {
+    public ArrayList<StudentResults> sortByName() {
         studentResult.sort((o1, o2) -> {
             String[] nameO1 = o1.getStudent().getName().split(" ");
             String[] nameO2 = o2.getStudent().getName().split(" ");       
@@ -63,5 +65,13 @@ public class StudentManagerController {
     {
         return dao.departments();
     }
+      public   List<StudentResult> getStudentResultBySubjectAndDepartment(String departmentCode, String subjectCode)
+      {
+          return dao.getStudentResultBySubjectAndDepartment(departmentCode, subjectCode);
+      }
+      public List<Student> getAllStudents(Department department)
+              {
+                  return dao.getStudentInDepartment(department.getCode());
+              }
     
 }

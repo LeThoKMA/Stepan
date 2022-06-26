@@ -43,7 +43,8 @@ public class Student {
         this.code = code;
     }
 
-    public String getDepartmentCode() {
+    public String getDepartmentCode()
+    {
         return departmentCode;
     }
 
@@ -91,6 +92,12 @@ public class Student {
         this.birthday = birthday;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" + "code=" + code + ", departmentCode=" + departmentCode + ", name=" + name + ", gender=" + gender + ", address=" + address + ", klass=" + klass + ", birthday=" + birthday + '}';
+    }
+
+    
     
     
   

@@ -145,7 +145,16 @@ public class FakeDatabase implements iFeature {
 
     @Override
     public List<Student> getStudentInDepartment(String departmentCode) {
-        return getAllStudent().stream().filter(student -> student.getDepartmentCode().equals(departmentCode)).collect(Collectors.toList());
+        ArrayList<Student> list=new ArrayList<>();
+        for (Student student : getAllStudent()) {
+               // System.out.println(student.toString());
+        if (student.getDepartmentCode().equalsIgnoreCase(departmentCode)) {
+             list.add(student);
+          
+            }
+           
+        }
+        return list;
     }
 
     @Override
